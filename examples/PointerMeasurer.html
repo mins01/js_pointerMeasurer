@@ -73,6 +73,7 @@
 		<h3>constructor</h3>
 		<ul class="list-group">
 			<li class="list-group-item">let pointerMeasurer = new PointerMeasurer(event)</li>
+			<li class="list-group-item">let pointerMeasurer = new PointerMeasurer()</li>
 		</ul>
 		<h3>property</h3>
 		<ul class="list-group">
@@ -95,9 +96,9 @@
 		</ul>
 		<h3>method</h3>
 		<ul class="list-group">
-			<li class="list-group-item">void pointerMeasurer.setFirst(event{pageX:100,pageY:100,timeStamp:Date.now()}|{x:100,y:100,timeStamp:Date.now()}) // 최초 포인터 정보를 저장.</li>
-			<li class="list-group-item">void pointerMeasurer.setCurrent(event{pageX:100,pageY:100,timeStamp:Date.now()}|{x:100,y:100,timeStamp:Date.now()}) // 현재 포인터 정보를 저장.</li>
-			<li class="list-group-item">void pointerMeasurer.setEvent(event) // 현재 포인터 이벤트를 연결. setFirst(event)와 setCurrent(event)를 알아서 호출함</li>
+			<li class="list-group-item">void pointerMeasurer.setFirst(event|{pageX:100,pageY:100,timeStamp:Date.now()}|{x:100,y:100,timeStamp:Date.now()}) // 최초 포인터 정보를 저장.</li>
+			<li class="list-group-item">void pointerMeasurer.setCurrent(event|{pageX:100,pageY:100,timeStamp:Date.now()}|{x:100,y:100,timeStamp:Date.now()}) // 현재 포인터 정보를 저장.</li>
+			<li class="list-group-item">void pointerMeasurer.setEvent(event) // pointer event를 설정. setFirst(event)와 setCurrent(event)를 알아서 호출함</li>
 			<li class="list-group-item">number(px) pointerMeasurer.distanceBetween(pointerMeasurer) // 다른 커스텀 포인터와의 거리 </li>
 			<li class="list-group-item">number(rad) pointerMeasurer.angleBetween(pointerMeasurer) // 다른 커스텀 포인터와의 각도 </li>
 		</ul>
