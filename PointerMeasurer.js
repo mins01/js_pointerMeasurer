@@ -34,25 +34,25 @@ class PointerMeasurer{
     }
   }
   setEvent(event){
-    if(this.event==null){
-      this.event = event;
+    if(this.first.timeStamp == null){
       this.pointerId = event.pointerId,
       this.isPrimary = event.isPrimary,
       this.setFirst(event);
     }
+    this.event = event;
     this.setCurrent(event);
   }
 
   setFirst(pointer){
-    this.first.x = pointer.pageX;
-    this.first.y = pointer.pageY;
-    this.first.timeStamp = pointer.timeStamp;
+    this.first.x = pointer.pageX??pointer.x??null;
+    this.first.y = pointer.pageY??pointer.y??null;
+    this.first.timeStamp = pointer.timeStamp??Date.now();
   }
   
   setCurrent(pointer){
-    this.current.x = pointer.pageX;
-    this.current.y = pointer.pageY;
-    this.current.timeStamp = pointer.timeStamp;
+    this.current.x = pointer.pageX??pointer.x??null;
+    this.current.y = pointer.pageY??pointer.y??null;
+    this.current.timeStamp = pointer.timeStamp??Date.now();
   }
   
   get duration(){ return this.current.timeStamp - this.first.timeStamp; }

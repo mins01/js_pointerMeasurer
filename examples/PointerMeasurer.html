@@ -95,8 +95,8 @@
 		</ul>
 		<h3>method</h3>
 		<ul class="list-group">
-			<li class="list-group-item">void pointerMeasurer.setFirst(event|{x:100,y:100,timeStamp:Date.now()}) // 최초 포인터 정보를 저장.</li>
-			<li class="list-group-item">void pointerMeasurer.setCurrent(event|{x:100,y:100,timeStamp:Date.now()}) // 현재 포인터 정보를 저장.</li>
+			<li class="list-group-item">void pointerMeasurer.setFirst(event{pageX:100,pageY:100,timeStamp:Date.now()}|{x:100,y:100,timeStamp:Date.now()}) // 최초 포인터 정보를 저장.</li>
+			<li class="list-group-item">void pointerMeasurer.setCurrent(event{pageX:100,pageY:100,timeStamp:Date.now()}|{x:100,y:100,timeStamp:Date.now()}) // 현재 포인터 정보를 저장.</li>
 			<li class="list-group-item">void pointerMeasurer.setEvent(event) // 현재 포인터 이벤트를 연결. setFirst(event)와 setCurrent(event)를 알아서 호출함</li>
 			<li class="list-group-item">number(px) pointerMeasurer.distanceBetween(pointerMeasurer) // 다른 커스텀 포인터와의 거리 </li>
 			<li class="list-group-item">number(rad) pointerMeasurer.angleBetween(pointerMeasurer) // 다른 커스텀 포인터와의 각도 </li>
@@ -124,6 +124,29 @@
 			// pm1.setFirst({x:100,y:100,timeStamp:Date.now()})
 			// pm1.setCurrent({x:200,y:200,timeStamp:Date.now()})
 
+			// use without event
+			let pm2 = new PointerMeasurer();;
+			{
+				pm2.setFirst({x:100,y:100,timeStamp:Date.now()})
+				pm2.setCurrent({x:200,y:200,timeStamp:Date.now()+3*1000})
+				const v = {
+					pointerId:pm2.pointerId,
+					isPrimary:pm2.isPrimary,
+					duration:pm2.duration,
+					distanceX:pm2.distanceX,
+					distanceY:pm2.distanceY,
+					distance:pm2.distance,
+					angle:pm2.angle,
+					velocityX:pm2.velocityX,
+					velocityY:pm2.velocityY,
+					velocity:pm2.velocity,
+					distanceBetween:pm2.distanceBetween(pm2),
+					angleBetween:pm2.angleBetween(pm2),
+				}
+				console.log(pm2.first,pm2.current,v);
+			}
+
+			// use with event
 			area.addEventListener('pointerdown',function(event){
 				pm = new PointerMeasurer(event);
 				pm1.setEvent(event);
