@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+	<title>js PointerMeasurer
+    </title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="shortcut icon" href="http://www.mins01.com/favicon.ico">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="/js/ForGoogle.js"></script>
+	<!-- google analytics -->
+	<script>if(window.ForGoogle){ ForGoogle.analytics() }else{ console.log("failure : ForGoogle.analytics()");}</script>
+	
+
+	<!-- jquery 관련 -->
+	<!-- <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script> -->
+
+	<!-- 부트스트랩 4 : IE8지원안됨! -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous"> 
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script> 
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script> -->
+	<!-- vue.js -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+	
+	<!-- meta og -->
+	
+	<meta property="og:title" content="js PointerMeasurer">
+	<meta property="og:description" content="js PointerMeasurer">
+	<meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+	<meta property="og:image:width" content="190">
+	<meta property="og:image:height" content="70" />
+	<meta property="og:site_name" content="js PointerMeasurer" />
+	<meta property="og:type" content="website">
+	
+	<!-- //meta og -->
+	<script src="../PointerMeasurer.js"></script>
+	
+	<style>
+		.event-area-wrap{position: relative;margin:20px auto; width: 300px;height: 300px;}
+		.event-area{background-color: #abc;outline: 2px solid #000; width: 300px;height: 300px;position: absolute; cursor: move;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-content: center;
+			justify-content: center;
+			align-items: center;
+		}
+		.event-target{background-color: #cba;outline: 2px solid #000; width: 100px;height: 100px;cursor: move;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-content: center;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+	
+</head>
+<body>
+	<div class="container">
+        <h1>js PointerMeasurer</h1>
+        <hr>
+		<h2>설명</h2>
+		<ul class="list-group">
+			<li class="list-group-item">pointer event 기반으로 pointer 정보 가공/제공</li>
+		</ul>
+		<hr>
+		<h2>SPECIFICATION</h2>
+		<h3>constructor</h3>
+		<ul class="list-group">
+			<li class="list-group-item">let pointerMeasurer = new PointerMeasurer(event)</li>
+		</ul>
+		<h3>property</h3>
+		<ul class="list-group">
+			<li class="list-group-item">int pointerMeasurer.pointerId // event.pointerId</li>
+			<li class="list-group-item">bool pointerMeasurer.isPrimary // event.isPrimary</li>
+			<li class="list-group-item">object pointerMeasurer.first // 최초 이벤트 정보(x,y,timeStamp)</li>
+			<li class="list-group-item">object pointerMeasurer.current // 최초 이벤트 정보(x,y,timeStamp)</li>
+			<li class="list-group-item">Event pointerMeasurer.event // 현재 이벤트</li>
+
+			<li class="list-group-item">getter number(ms) pointerMeasurer.duration // 활동 시간</li>
+			<li class="list-group-item">getter number(px) pointerMeasurer.distanceX // X축 이동 거리</li>
+			<li class="list-group-item">getter number(px) pointerMeasurer.distanceY // Y축 이동 거리</li>
+			<li class="list-group-item">getter number(px) pointerMeasurer.distance // 이동 거리</li>
+			<li class="list-group-item">getter number(rad) pointerMeasurer.angle // 각도</li>
+			<li class="list-group-item">getter number(px/ms) pointerMeasurer.velocityX // X축 이동 속도 (이동 거리/활동 시간)</li>
+			<li class="list-group-item">getter number(px/ms) pointerMeasurer.velocityY // Y축 이동 속도 (이동 거리/활동 시간)</li>
+			<li class="list-group-item">getter number(px/ms) pointerMeasurer.velocity // 이동 속도 (이동 거리/활동 시간)</li>
+
+			
+		</ul>
+		<h3>method</h3>
+		<ul class="list-group">
+			<li class="list-group-item">void pointerMeasurer.setFirst(event|{x:100,y:100,timeStamp:Date.now()}) // 최초 포인터 정보를 저장.</li>
+			<li class="list-group-item">void pointerMeasurer.setCurrent(event|{x:100,y:100,timeStamp:Date.now()}) // 현재 포인터 정보를 저장.</li>
+			<li class="list-group-item">void pointerMeasurer.setEvent(event) // 현재 포인터 이벤트를 연결. setFirst(event)와 setCurrent(event)를 알아서 호출함</li>
+			<li class="list-group-item">number(px) pointerMeasurer.distanceBetween(pointerMeasurer) // 다른 커스텀 포인터와의 거리 </li>
+			<li class="list-group-item">number(rad) pointerMeasurer.angleBetween(pointerMeasurer) // 다른 커스텀 포인터와의 각도 </li>
+		</ul>
+		
+		<hr>
+		<div class="event-area-wrap" id="event-area-wrap">
+			<div class="event-area" id="event-area" style="left:0;top:0; touch-action: none;user-select: none;">
+				<div class="event-target" id="event-target" style="left:0;top:0; pointer-events: none;">target</div>
+			</div>
+		</div>
+		<div id="text-detail" style="white-space: break-spaces; font-size: 8px;">
+
+		</div>
+		<div>
+			distanceBetween는 distance와 같고(시작 위치가 같아서)<br> 
+			angleBetween는 angle의 반전값(Math.PI - angle)이 되야한다. (A,B 를 B,A로 순서 바꿔 계산 하므로)
+		</div>
+        
+		
+		<script>
+			let area = document.querySelector('#event-area');
+			let pm = null;
+			let pm1 = new PointerMeasurer();;
+			// pm1.setFirst({x:100,y:100,timeStamp:Date.now()})
+			// pm1.setCurrent({x:200,y:200,timeStamp:Date.now()})
+
+			area.addEventListener('pointerdown',function(event){
+				pm = new PointerMeasurer(event);
+				pm1.setEvent(event);
+
+				const v = {
+					pointerId:pm.pointerId,
+					isPrimary:pm.isPrimary,
+					duration:pm.duration,
+					distanceX:pm.distanceX,
+					distanceY:pm.distanceY,
+					distance:pm.distance,
+					angle:pm.angle,
+					velocityX:pm.velocityX,
+					velocityY:pm.velocityY,
+					velocity:pm.velocity,
+					distanceBetween:pm.distanceBetween(pm1),
+					angleBetween:pm.angleBetween(pm1),
+				}
+				document.querySelector('#text-detail').textContent = "# event.type : "+event.type+"\n"+"# event.target.id : "+event.target.id+"\n"+JSON.stringify(v,null,2);
+			})
+			window.addEventListener('pointermove',function(event){
+				if(!pm){return}
+				if(pm.pointerId != event.pointerId){return}
+				pm.setCurrent(event);
+				const v = {
+					pointerId:pm.pointerId,
+					isPrimary:pm.isPrimary,
+					duration:pm.duration,
+					distanceX:pm.distanceX,
+					distanceY:pm.distanceY,
+					distance:pm.distance,
+					angle:pm.angle,
+					velocityX:pm.velocityX,
+					velocityY:pm.velocityY,
+					velocity:pm.velocity,
+					distanceBetween:pm.distanceBetween(pm1),
+					angleBetween:pm.angleBetween(pm1),
+				}
+				document.querySelector('#text-detail').textContent = "# event.type : "+event.type+"\n"+"# event.target.id : "+event.target.id+"\n"+JSON.stringify(v,null,2);
+				area.style.transform = `translate(${pm.distanceX}px,${pm.distanceY}px)`;
+			})
+			window.addEventListener('pointerup',function(event){
+				if(!pm){return}
+				if(pm.pointerId != event.pointerId){return}
+				const v = {
+					pointerId:pm.pointerId,
+					isPrimary:pm.isPrimary,
+					duration:pm.duration,
+					distanceX:pm.distanceX,
+					distanceY:pm.distanceY,
+					distance:pm.distance,
+					angle:pm.angle,
+					velocityX:pm.velocityX,
+					velocityY:pm.velocityY,
+					velocity:pm.velocity,
+					distanceBetween:pm.distanceBetween(pm1),
+					angleBetween:pm.angleBetween(pm1),
+				}
+				pm = null;
+				document.querySelector('#text-detail').textContent = "# event.type : "+event.type+"\n"+"# event.target.id : "+event.target.id+"\n"+JSON.stringify(v,null,2);
+				area.style.transform = `translate(0px,0px)`;
+			})
+
+		</script>
+		<div style="height:100vh"></div>
+	</div>
+</body>
+</html>
