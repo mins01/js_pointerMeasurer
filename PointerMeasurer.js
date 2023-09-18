@@ -18,6 +18,15 @@ class PointerMeasurer{
   event = null;
   
   constructor(event){
+    this.reset();
+    if(event){
+      this.setEvent(event);
+    }
+  }
+  // 최기화
+  reset(){
+    this.pointerId = null;
+    this.isPrimary = false;
     this.first = {
       x:null,
       y:null,
@@ -28,10 +37,6 @@ class PointerMeasurer{
       y:null,
       timeStamp:null,
     };
-    
-    if(event){
-      this.setEvent(event);
-    }
   }
   setEvent(event){
     if(this.first.timeStamp == null){

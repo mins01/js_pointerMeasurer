@@ -171,7 +171,7 @@
 			window.addEventListener('pointermove',function(event){
 				if(!pm){return}
 				if(pm.pointerId != event.pointerId){return}
-				pm.setCurrent(event);
+				pm.setEvent(event);
 				const v = {
 					pointerId:pm.pointerId,
 					isPrimary:pm.isPrimary,
@@ -192,7 +192,7 @@
 			window.addEventListener('pointerup',function(event){
 				if(!pm){return}
 				if(pm.pointerId != event.pointerId){return}
-				pm.setCurrent(event);
+				pm.setEvent(event);
 				const v = {
 					pointerId:pm.pointerId,
 					isPrimary:pm.isPrimary,
