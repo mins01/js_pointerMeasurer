@@ -1,7 +1,8 @@
 "use strict";
 /**
+ * @class
  * pointer measurer
- * 포인트 측정기. 
+ * 포인터 측정기. 
  * 이동거리, 각도, 가속도, 이동 시간 등등
  */
 class PointerMeasurer{
