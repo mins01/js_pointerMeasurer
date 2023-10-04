@@ -49,7 +49,7 @@ class PointerMeasurer{
   timeStamp = null;
   /**
    * @constructor
-   * @param {Event} event 
+   * @param {(PointerEvent|null)} event 
    */
   constructor(event){
     this.reset();
@@ -68,6 +68,8 @@ class PointerMeasurer{
     this.firstY = null;
     this.x = null;
     this.y = null;
+    this.firstTimeStamp = null
+    this.timeStamp = null
   }
 
   /**
@@ -78,33 +80,31 @@ class PointerMeasurer{
     if(this.firstX === null){
       this.pointerId = event.pointerId;
       this.isPrimary = event.isPrimary;
-      this.setFirst(event.x,event.y,event.timeStamp);
+      this.setFirst(event.x,event.y);
     }
-    this.setCurrent(event.x,event.y,event.timeStamp);
+    this.setCurrent(event.x,event.y);
   }
 
   /**
    * set first pointer data
    * @param {number} x 
    * @param {number} y 
-   * @param {number} timeStamp 
    */
-  setFirst(x,y,timeStamp){
+  setFirst(x,y){
     this.firstX = x;
     this.firstY = y;
-    this.firstTimeStamp = timeStamp??Date.now();
+    this.firstTimeStamp = Date.now();
   }
   
   /**
    * set current pointer data
    * @param {number} x 
    * @param {number} y 
-   * @param {number} timeStamp 
    */
-  setCurrent(x,y,timeStamp){
+  setCurrent(x,y){
     this.x = x;
     this.y = y;
-    this.timeStamp = timeStamp??Date.now();
+    this.timeStamp = Date.now();
   }
 
   /**
@@ -165,16 +165,16 @@ class PointerMeasurer{
 
   /**
    * distance between two pointers 
-   * @param {PointMeasurer} other 
-   * @returns {number}
+   * @param {PointerMeasurer} other 
+   * @returns {number} distance between two points
    */
   distanceBetween(other){ 
     return Math.sqrt(Math.pow(other.x - this.x,2) + Math.pow(other.y - this.y,2))
   }
   /**
    * angle between two pointers (A->B)(rad)
-   * @param {PointMeasurer} other 
-   * @returns {number}
+   * @param {PointerMeasurer} other 
+   * @returns {number} angle between two points
    */
   angleBetween(other){ 
     return Math.atan2(other.y - this.y,other.x - this.x);

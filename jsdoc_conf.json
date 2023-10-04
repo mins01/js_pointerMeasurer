@@ -19,5 +19,8 @@
                 "exclude": ["./fonts","./scripts"]
               }
         }
+    },
+    "opts": {
+        "destination": "./docs/"
     }
 }

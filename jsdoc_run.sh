@@ -1,2 +1,2 @@
-rm -rf ./out
-jsdoc -c jsdoc/conf.json *
+rm -rf ./docs
+jsdoc -c jsdoc_conf.json *
